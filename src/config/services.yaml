@@ -14,17 +14,15 @@ services:
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
-        resource: '../src/'
-        exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-            - '../src/Tests/'
+        resource: '../app/'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller/'
+    App\Presentations\Http\API\Controller\:
+        resource: '../app/Presentations/Http/API/Controller/'
+        tags: ['controller.service_arguments']
+    App\Presentations\Http\Web\Controller\:
+        resource: '../app/Presentations/Http/Web/Controller/'
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed

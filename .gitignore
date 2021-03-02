@@ -8,3 +8,6 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+/src/composer.phar
+/src/vendor/
+/src/var/
