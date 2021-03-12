@@ -11,6 +11,38 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
+    /**
+     * {@inheritdoc}
+     */
+    public function registerBundles(): iterable
+    {
+        $contents = require_once $this->getConfigDir().'/bundles.php';
+
+        if (is_iterable($contents)) {
+            foreach ($contents as $class => $envs) {
+                if ($envs[$this->environment] ?? $envs['all'] ?? false) {
+                    yield new $class();
+                }
+            }
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCacheDir(): string
+    {
+        return $this->getVarDir().'/'.$this->environment.'/cache';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLogDir()
+    {
+        return $this->getVarDir().'/'.$this->environment.'/log';
+    }
+
     protected function configureContainer(ContainerConfigurator $container): void
     {
         $container->import($this->getConfigDir().'/{packages}/*.yaml');
@@ -38,6 +70,11 @@ class Kernel extends BaseKernel
 
     protected function getConfigDir(): string
     {
-        return '../config';
+        return $this->getProjectDir().'/src/config';
+    }
+
+    protected function getVarDir(): string
+    {
+        return $this->getProjectDir().'/src/var';
     }
 }
