@@ -4,10 +4,8 @@
 
 ```bash
 $ curl -sSL https://getcomposer.org/installer | php
-$ php composer.phar clear-cache && \
-  php composer.phar update && \
-  php composer.phar install && \
-  php composer.phar dump-autoload --no-dev --classmap-authoritative
+$ php composer.phar clear-cache \
+  && php composer.phar install
 ```
 
 ## test
